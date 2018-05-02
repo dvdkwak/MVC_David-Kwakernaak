@@ -1,0 +1,2 @@
+This folder contains all controllers of your system.
+Controllers are php files which regulate what code, classes or functions need to be called to prossess data on that page.

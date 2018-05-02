@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Gugi');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+body{
+  background: #1E90FF;
+  background-image: url("/assets/images/404_bg.png");
+  color: #fff;
+
+  h1{
+    font-size: 300px;
+    font-family: 'Pacifico', cursive;
+    margin-bottom: 100px;
+    transition-duration: 300ms;
+
+    @media screen and(max-width: 991px){
+      font-size: 200px;
+      margin-bottom: 80px;
+    }
+
+    @media screen and(max-width: 575px){
+      font-size: 100px;
+      margin-bottom: 50px;
+    }
+  }
+
+}// End of body
+
+
+// UC_menu
+.UC_menu{
+  position: fixed;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  border-bottom: 10px solid white;
+  color: white;
+  z-index: 4;
+  transition-duration: 300ms;
+
+  &.changed{
+    background: #FF6347;
+    left: 0;
+    right: 0;
+    padding: 0 5%;
+    border: none;
+    color: black;
+    height: 50px;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.5);
+
+    h1{
+      font-size: 32px;
+    }
+  }
+
+  h1{
+    font-family: 'Gugi', cursive;
+    margin: 0;
+    margin-top: 10px;
+    font-size: 54px;
+    transition-duration: inherit;
+
+    @media screen and(max-width: 993px){
+      font-size: 32px;
+    }
+  }
+
+  @media screen and(max-width: 992px){
+    border-bottom: 5px solid #fff;
+  }
+
+} // End of UC_menu
+
+
+// UC_404_contianer
+.UC_404_contianer{
+  text-align: center;
+
+  p{
+    font-size: 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    transition-duration: 300ms;
+    padding-left: 5%;
+    padding-right: 5%;
+
+    @media screen and(max-width: 993px){
+      font-size: 24px;
+    }
+
+    @media screen and(max-width: 575px){
+      font-size: 16px;
+    }
+  }
+
+} // End of UC_404_contianer
+
+
+// UC_404_text
+.UC_404_text{
+  position: fixed;
+  background: white;
+  bottom: 150px;
+  left: 50px;
+  margin-right: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border: 2px solid #000;
+  z-index: 6;
+  opacity: 0;
+  animation: shake 400ms linear infinite;
+
+  p{
+    color: black;
+    font-size: 32px;
+    font-family: 'Pacifico', cursive;
+    margin: 20px 50px;
+  }
+}
+
+@keyframes shake{
+  0%{
+    transform: rotate(0deg);
+  }
+  25%{
+    transform: rotate(6deg);
+  }
+  50%{
+    transform: rotate(0deg);
+  }
+  75%{
+    transform: rotate(-6deg);
+  }
+  100%{
+    transform: rotate(0deg);
+  }
+}

@@ -1,0 +1,14 @@
+app/css:
+
+This folder contains all your css files which will be generated from the sass folder if you make use of gulp.
+To make use of the view/sass folder and start styling in sass you will need to possess some basic node knowledge!
+
+
+app/js:
+
+This folder should contain all javascript files for your application.
+
+
+app/index.php:
+
+In this folder you will create new routes which your app should listen to.

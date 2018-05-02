@@ -1,0 +1,3 @@
+This configuration file will contain all settings of your system.
+If you want to connect to a database for example, you should store the database settings in this file
+(config/config.php)

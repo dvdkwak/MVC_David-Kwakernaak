@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Gugi');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Mono');
+
+
+// fixed background contains titels in the background as well
+.UC_background{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  background: #FF6347;
+  background-image: url("/assets/images/background.png");
+  color: white;
+  transition-duration: 300ms;
+
+  h1{
+    font-family: 'Pacifico', cursive;
+    font-size: 100px;
+    margin: 0;
+    transition-duration: 300ms;
+  }
+
+  .UC_title_container{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+
+    .UC_title{
+      position: relative;
+      width: 50%;
+      height: 100%;
+      margin: 0 auto;
+
+      @media screen and (max-width: 780px) {
+        width: 100%;
+      }
+
+      h1{
+        margin-bottom: -20px;
+
+        @media screen and (max-width: 780px) {
+          text-align: center;
+          font-size: 64px;
+        }
+      }
+
+      h1#center{
+        text-align: center;
+      }
+
+      h1#right{
+        text-align: right;
+
+        @media screen and (max-width: 780px) {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+} // End of UC_background
+
+
+// UC_menu
+.UC_menu{
+  position: fixed;
+  top: 0;
+  left: 5%;
+  right: 5%;
+  border-bottom: 10px solid white;
+  color: white;
+  z-index: 4;
+  transition-duration: 300ms;
+
+  &.changed{
+    background: #FF6347;
+    left: 0;
+    right: 0;
+    padding: 0 5%;
+    border: none;
+    color: black;
+    height: 50px;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.5);
+
+    h1{
+      font-size: 32px;
+    }
+  }
+
+  h1{
+    font-family: 'Gugi', cursive;
+    margin: 0;
+    margin-top: 10px;
+    font-size: 54px;
+    transition-duration: 300ms;
+
+    @media screen and(max-width: 993px){
+      font-size: 32px;
+      transition-duration: 0s;
+    }
+  }
+
+  @media screen and(max-width: 992px){
+    border-bottom: 5px solid #fff;
+  }
+
+} // End of UC_menu
+
+
+// UC_getReady_btn
+.UC_getReady_btn{
+  position: static;
+  background: #1E90FF;
+  margin: 0 auto;
+  margin-bottom: -50px;
+  border-radius: 20px;
+  border: 5px solid #F0FFF0;
+  box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.5);
+  z-index: 3;
+
+  &:hover{
+    background: lime;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  h1{
+    color: white;
+    font-size: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 900;
+    padding: 10px 20px;
+    transition-duration: 300ms;
+
+    @media screen and(max-width: 993px){
+      font-size: 32px;
+      padding: 5px 20px;
+    }
+  }
+
+  @media screen and(max-width: 993px){
+    padding-top: 10px;
+  }
+
+} // End of UC_getReady_btn
+
+
+// content div
+.UC_content{
+  position: relative;
+  background: #F0FFF0;
+  width: 100%;
+  box-shadow: 0px -10px 50px 10px rgba(0,0,0,0.5);
+  z-index: 2;
+  font-family: 'Montserrat', sans-serif;
+
+  section{
+    background: rgb(230, 230, 230);
+    padding: 40px 5% 80px 5%;
+
+    &#section1{
+      padding-top: 100px;
+    }
+
+    &.light{
+      background: none;
+
+      .UC_text{
+        background: rgb(230, 230, 230);
+      }
+
+      .UC_code{
+        background: #232323;
+      }
+    }
+
+    @media screen and (min-width: 992px) {
+      &.right{
+        text-align: right;
+      }
+    }
+
+    @media screen and (max-width: 993px){
+      .UC_section_push{
+        margin-bottom: 80px;
+      }
+    }
+
+    h1{
+      margin-bottom: 40px;
+    }
+
+    .UC_text{
+      background: #F0FFF0;
+      color: #000;
+      border-radius: 20px;
+      padding: 20px;
+      height: 100%;
+      width: 100%;
+      text-align: left;
+
+      &.right{
+        float: right;
+      }
+
+      ol{
+        padding-left: 15px;
+      }
+
+      ul{
+        padding: 15px;
+      }
+    }
+
+    .UC_code{
+      background: #232323;
+      border-radius: 20px;
+      padding: 20px;
+      height: 100%;
+      width: 100%;
+      color: #E6E1DC;
+      text-align: left;
+      font-family: 'IBM Plex Mono', monospace;
+
+      &.right{
+        float: right;
+      }
+    }
+
+  } // End of section
+
+} // End of UC_content

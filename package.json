@@ -1,0 +1,23 @@
+{
+  "name": "mvc-david",
+  "version": "1.0.0",
+  "description": "mvc framework built by david",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "browser-sync": "^2.23.5",
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.2.0",
+    "gulp-sass-bulk-import": "^1.0.1",
+    "gulp-sass": "^3.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mvc",
+    "framework"
+  ],
+  "author": "david kwakernaak",
+  "license": "ISC"
+}
