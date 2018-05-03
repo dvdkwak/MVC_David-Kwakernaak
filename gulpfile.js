@@ -23,6 +23,7 @@ gulp.task( 'watch', function(){
 		gulp.watch('app/**/*.php').on('change', browserSync.reload);
 		gulp.watch('app/js/**/*.js').on('change', browserSync.reload);
 		gulp.watch('views/**/*.php').on('change', browserSync.reload);
+		gulp.watch('controllers/**/*.php').on('change', browserSync.reload);
 });
 
 gulp.task( 'default', ['sass','browser-sync', 'watch']);

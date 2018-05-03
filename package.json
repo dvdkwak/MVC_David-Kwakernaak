@@ -1,6 +1,6 @@
 {
   "name": "mvc-david",
-  "version": "1.1",
+  "version": "1.2",
   "description": "mvc framework built by david",
   "main": "gulpfile.js",
   "dependencies": {
