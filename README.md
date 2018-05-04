@@ -1,11 +1,11 @@
 # MVC (YouCode? no name yet...) PHP-Framework
-MVC Built by me :D (PHP-framework)
+MVC Built by me :3 (PHP-framework)
 
 
 Hi there!
 
 Cool you're here to check out my project!
-Let me explain some stuff to get you started on your own php project...
+Let me explain some stuff to get you started on your own php project ;D
 
 First step is to download this project, when you have downloaded it put it in your root folder of your webserver 
 (this should be a local webserver for developping)
