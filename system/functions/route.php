@@ -487,9 +487,9 @@ class Route
         <span style=\"color:#f4e755\">\"".$page['route']."\"</span>,
         ";
         if(!is_array($page['view'])){
-          $codeResponse .= ", <span style=\"color:#f4e755\">\"".$page['view']."\"</span>";
+          $codeResponse .= "<span style=\"color:#f4e755\">\"".$page['view']."\"</span>";
         }else{
-          $codeResponse .= ", [";
+          $codeResponse .= "[";
           foreach($page['view'] AS $view){
             $codeResponse .= "<span style=\"color:#f4e755\">\"".$view."\"</span>, ";
           }
