@@ -25,4 +25,3 @@ $route->add(); // to catch the "home" url
 $page = $route->createPage($urlParams, $url);
 $page = $route->check($page);
 include_once($root."system/views/home.php");
-?>
