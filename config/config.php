@@ -1,5 +1,6 @@
 <?php
 
+// please mind that this class will be used as the database endpoint in other classes
 // class for a database connection
 class db
 {
