@@ -1,9 +1,17 @@
 <?php
 
+// DATBASE LAYOUT MINIMAL FOR THIS CLASS TO WORK:
+// id (int) (AI)
+// username (varchar)
+// hash (varchar) (12 min)
+// salt (varchar) (12 min)
+
+
 // User class mainly to login and give basic user information (like UID, and loginName)
 // This class will store some session which may NEVER be overruled by any other class or controller
 // list of the used $_SESSION variables:
 // $_SESSION['loggedIn'] => $id
+// $_SESSION['userlevel'] => userlevel of logged in user
 // LoggedIn will be set to the current loggedIn UID
 class User extends db
 {
@@ -13,7 +21,7 @@ class User extends db
   public $id        = ""; // UID
   public $username  = ""; // Username of the user (needed for the login)
   public $password  = ""; // Password FROM the user (User given password, not db registered)
-  public $userLevel = ""; // Userlevel of the user (int)
+  private $userLevel = ""; // Userlevel of the user (int)
   private $hash     = ""; // db Registered password (is a salted hash)
   private $salt     = ""; // db stored salt
 
@@ -38,7 +46,7 @@ class User extends db
   // on true: user has been set
   // on false: this UID does not exist
   // note: this has NOTHING to do with logging in etc
-  public function setUserById($id)
+  private function setUserById($id)
   {
     if(isset($id) && !empty($id)){
       $mysqli = $this->connect(); // fetching mysqli object
@@ -73,17 +81,40 @@ class User extends db
     $query = "SELECT * FROM tbl_users WHERE `username` = '$this->username'";
     $result = $mysqli->query($query);
     if($result->num_rows !== 1){
+      $this->logout();
       return false; // Username does not exist in db
     }
     $data = $result->fetch_assoc();
     $this->hash = $data['hash']; // setting hash needed for checkCredentials();
     $this->salt = $data['salt']; // setting salt needed for checkCredentials();
+    $this->userLevel = $data['userlevel']; // setting the userlevel
+    $this->id = $data['id']; // setting the id of the user
     if($this->checkCredentials()){ // checking wether given input is a match, if no => else
       $this->setSessions(); // setting the session, duhuh ;p
       return true; // Login succeeded!
     }
+    $this->logout();
     return false;
   } // End of login();
+
+
+  // lock() => boolean // should this user be able to view this page?
+  public function lock($location = NULL, $userlevel = "0")
+  {
+    if(isset($_SESSION['loggedIn']) && isset($_SESSION['userlevel'])){
+      if(is_array($userlevel)){
+        if(in_array($_SESSION['userlevel'], $userlevel)){ // check wether this user's userlevel is in the allowed userlevels
+          return true; // allowed to view this page
+        }
+      }elseif($userlevel == $_SESSION['userlevel']){
+        return true; // userlevel is same as requested userlevel
+      }
+    }
+    if(isset($location) && !empty($location)){
+      $this->moveTo($location);
+    }
+    return false; // did not meet the requirements
+  } // End of lock();
 
 
   // generateSalt() => true
@@ -93,7 +124,7 @@ class User extends db
     $time = time();
     $add = hash('sha256', $this->username);
     $this->salt = hash('sha256', $time.$add);
-    return true;
+    return $this->salt;
   } // End of generateSalt
 
 
@@ -116,19 +147,23 @@ class User extends db
   private function setSessions()
   {
     $_SESSION['loggedIn'] = $this->id;
+    $_SESSION['userlevel'] = $this->userLevel;
     return true;
   } // End of setSessions();
 
 
   // hash() => will return hashed and salted $this->password
-  private function hashPass($password = "")
+  public function hashPass($password = "", $salt = "")
   {
     if(isset($password) && !empty($password)){
       // code applied on a user input on this function
+      $hashedPass = hash('sha256', $password);
+      $hashedPass = hash('sha256', $hashedPass.$salt);
+      return $hashedPass;
     }
     $password = $this->password;
     $hashedPass = hash('sha256', $password);
-    $hashedPass = $hashedPass.$this->salt;
+    $hashedPass = hash('sha256', $hashedPass.$this->salt);
     return $hashedPass;
   } // End of hashPass();
 
@@ -143,5 +178,14 @@ class User extends db
     ";
   } // End of moveTo();
 
+
+  // logout() => return true, removes all user sessions
+  public function logout($location = null)
+  {
+    session_destroy();
+    if(isset($location) && !empty($location)){
+      $this->moveTo($location);
+    }
+  } // End of logout();
 
 } // End of User
