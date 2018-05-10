@@ -859,6 +859,89 @@ class Route
             }
           }
           if($scriptError){
+            // Start of code response
+            $codeResponse = "
+            <span style=\"color:#757575\">// Your current route:</span><br>
+            <span style='color:rgb(255,99,71)'>\$route</span>-><span style='color:rgb(89,152,255)'>add</span>(
+            <span style=\"color:#f4e755\">\"".$page['route']."\"</span>,
+            ";
+            if(!is_array($page['view'])){
+              $codeResponse .= ", <span style=\"color:#f4e755\">\"".$page['view']."\"</span>";
+            }else{
+              $codeResponse .= ", [";
+              foreach($page['view'] AS $view){
+                $codeResponse .= "<span style=\"color:#f4e755\">\"".$view."\"</span>, ";
+              }
+              $codeResponse = substr($codeResponse, 0, -2);
+              $codeResponse .= "]
+              ";
+            }
+            if($page['title'] !== "Welcome!"){
+              if(!is_array($page['title'])){
+                $codeResponse .= ", <span style=\"color:#f4e755\">\"".$page['title']."\"</span>";
+              }else{
+                $codeResponse .= ", [";
+                foreach($page['title'] AS $title){
+                  $codeResponse .= "<span style=\"color:#f4e755\">\"".$title."\"</span>, ";
+                }
+                $codeResponse = substr($codeResponse, 0, -2);
+                $codeResponse .= "]";
+              }
+            }
+            if($page['controller'] !== NULL){
+              if(!is_array($page['controller'])){
+                $codeResponse .= ", <span style=\"color:#f4e755\">\"".$page['controller']."\"</span>";
+              }else{
+                $codeResponse .= ", [";
+                foreach($page['controller'] AS $controller){
+                  $codeResponse .= "<span style=\"color:#f4e755\">\"".$controller."\"</span>, ";
+                }
+                $codeResponse = substr($codeResponse, 0, -2);
+                $codeResponse .= "]";
+              }
+            }
+            if($page['style'] !== ['standard/UC.css']){
+              if(!is_array($page['style'])){
+                $codeResponse .= ", <span style=\"color:#f4e755\">\"".$page['style']."\"</span>";
+              }else{
+                $codeResponse .= ", [";
+                foreach($page['style'] AS $style){
+                  $codeResponse .= "<span style=\"color:#f4e755\">\"".$style."\"</span>, ";
+                }
+                $codeResponse = substr($codeResponse, 0, -2);
+                $codeResponse .= "]";
+              }
+            }
+            if($page['script'] !== ['functions/center.function.js', 'functions/scrollDownToTarget.function.js', 'standard/UC_base.js']){
+              if(!is_array($page['script'])){
+                $codeResponse .= ", <u><span style=\"color:#f4e755\">\"".$page['script']."\"</span></u>";
+              }else{
+                $codeResponse .= ", <u>[";
+                foreach($page['script'] AS $script){
+                  $codeResponse .= "<span style=\"color:#f4e755\">\"".$script."\"</span>, ";
+                }
+                $codeResponse = substr($codeResponse, 0, -2);
+                $codeResponse .= "]</u>";
+              }
+            }
+            if($page['data'] !== NULL){
+              if(!is_array($page['data'])){
+                $codeResponse .= ", <span style=\"color:#f4e755\">\"".$page['data']."\"</span>";
+              }else{
+                $codeResponse .= ", [";
+                foreach($page['data'] AS $data){
+                  $codeResponse .= "<span style=\"color:#f4e755\">\"".$data."\"</span>, ";
+                }
+                $codeResponse = substr($codeResponse, 0, -2);
+                $codeResponse .= "]";
+              }
+            }
+            $codeResponse .= ");";
+            // End codeResponse
+          $textResponse = "This script seems not to exist in your js folder, make sure to first create this script.<br>
+          <br>
+          Maybe you should place brackets around the string";
+          $nameResponse = "This Script does not exist";
             $page['errors'][8] = array(
               "name" => $nameResponse,
               "codeResponse" => $codeResponse,
