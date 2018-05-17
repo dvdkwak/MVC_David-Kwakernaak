@@ -5,6 +5,7 @@
 // username (varchar)
 // hash (varchar) (12 min)
 // salt (varchar) (12 min)
+// userlevel (int) (0=admin)
 
 
 // User class mainly to login and give basic user information (like UID, and loginName)

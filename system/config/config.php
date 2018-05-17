@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $root = __DIR__;
 $root = $root."/../../";
 
