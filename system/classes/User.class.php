@@ -24,6 +24,7 @@ class User extends db
   public $userLevel = ""; // Userlevel of the user (int)
   private $hash     = ""; // db Registered password (is a salted hash)
   private $salt     = ""; // db stored salt
+  private $userData = ""; // userlist() will return this array filled with all users
 
 
   // **METHODS**
@@ -66,6 +67,24 @@ class User extends db
     }
     return false; // no ID has been given / failed query
   } // End of setUserById();
+
+
+  // userlist() => List of all existing users
+  public function userlist()
+  {
+    $mysqli = $this->connect();
+    $query = "SELECT * FROM tbl_users";
+    $result = $mysqli->query($query);
+    if($result){
+      while($data = $result->fetch_assoc()){
+        $this->userData[] = $data;
+      }
+      if(!empty($this->userData)){
+        return $this->userData; // Return all users
+      }
+    }
+    return false; // Something went wrong
+  } // End of userlist();
 
 
   // login($username, $password) => boolean
@@ -173,7 +192,6 @@ class User extends db
 
   // register() => Boolean
   // registers this user as a new user in the system
-  // username, password and userlevel need to be set to be able to this
   public function register()
   {
     if(!empty($this->username) || !empty($this->password) || isset($this->userLevel)){
