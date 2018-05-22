@@ -12,7 +12,6 @@
 // list of the used $_SESSION variables:
 // $_SESSION['loggedIn'] => $id
 // $_SESSION['userlevel'] => userlevel of logged in user
-// $_SESSION['oldLocation'] => To make it possible to auto-return to last page before login
 // LoggedIn will be set to the current loggedIn UID
 class User extends db
 {
@@ -22,7 +21,7 @@ class User extends db
   public $id        = ""; // UID
   public $username  = ""; // Username of the user (needed for the login)
   public $password  = ""; // Password FROM the user (User given password, not db registered)
-  private $userLevel = ""; // Userlevel of the user (int)
+  public $userLevel = ""; // Userlevel of the user (int)
   private $hash     = ""; // db Registered password (is a salted hash)
   private $salt     = ""; // db stored salt
 
@@ -170,6 +169,33 @@ class User extends db
     $hashedPass = hash('sha256', $hashedPass.$this->salt);
     return $hashedPass;
   } // End of hashPass();
+
+
+  // register() => Boolean
+  // registers this user as a new user in the system
+  // username, password and userlevel need to be set to be able to this
+  public function register()
+  {
+    if(!empty($this->username) || !empty($this->password) || isset($this->userLevel)){
+      $mysqli = $this->connect();
+      $this->username = $mysqli->real_escape_string($this->username);
+      $this->password = $mysqli->real_escape_string($this->password);
+      $this->userLevel = $mysqli->real_escape_string($this->userLevel);
+      $this->salt = $this->generateSalt();
+      $this->hash = $this->hashPass($this->password, $this->salt);
+      $query = "INSERT INTO tbl_users
+                        SET username = '$this->username',
+                            hash = '$this->hash',
+                            salt = '$this->salt',
+                            userlevel = '$this->userLevel'";
+      $result = $mysqli->query($query);
+      if(!$result){
+        return false; // Something went wrong with the query
+      }
+      return true; // This user has been added to the database
+    }
+    return false; // Some data has not been set
+  } // End of register();
 
 
   // moveTo($location) => moves to $location
