@@ -5,7 +5,6 @@
 // username (varchar)
 // hash (varchar) (12 min)
 // salt (varchar) (12 min)
-// userlevel (int) (0=admin)
 
 
 // User class mainly to login and give basic user information (like UID, and loginName)
@@ -13,6 +12,7 @@
 // list of the used $_SESSION variables:
 // $_SESSION['loggedIn'] => $id
 // $_SESSION['userlevel'] => userlevel of logged in user
+// $_SESSION['oldLocation'] => To make it possible to auto-return to last page before login
 // LoggedIn will be set to the current loggedIn UID
 class User extends db
 {
@@ -100,8 +100,11 @@ class User extends db
 
 
   // lock() => boolean // should this user be able to view this page?
-  public function lock($location = NULL, $userlevel = "0")
+  public function lock($location = NULL, $oldLocation = NULL, $userlevel = "0")
   {
+    if(!empty($oldLocation)){
+      $_SESSION['oldLocation'] = $oldLocation;
+    }
     if(isset($_SESSION['loggedIn']) && isset($_SESSION['userlevel'])){
       if(is_array($userlevel)){
         if(in_array($_SESSION['userlevel'], $userlevel)){ // check wether this user's userlevel is in the allowed userlevels
@@ -118,7 +121,7 @@ class User extends db
   } // End of lock();
 
 
-  // generateSalt() => true
+  // generateSalt() => $salt
   // setsCurrent this salt to a random generated one
   public function generateSalt()
   {
@@ -153,7 +156,7 @@ class User extends db
   } // End of setSessions();
 
 
-  // hash() => will return hashed and salted $this->password
+  // hashPass() => will return hashed and salted $this->password
   public function hashPass($password = "", $salt = "")
   {
     if(isset($password) && !empty($password)){
@@ -170,20 +173,30 @@ class User extends db
 
 
   // moveTo($location) => moves to $location
-  public function moveTo($location)
+  public function moveTo($location = NULL)
   {
-    echo "
-    <script type='text/javascript'>
-      window.location.href = '$location';
-    </script>
-    ";
+    if(empty($location)){
+      echo "
+      <script type='text/javascript'>
+        window.location.href = '".$_SESSION['oldLocation']."';
+      </script>
+      ";
+    }else{
+      echo "
+      <script type='text/javascript'>
+        window.location.href = '$location';
+      </script>
+      ";
+    }
   } // End of moveTo();
 
 
   // logout() => return true, removes all user sessions
   public function logout($location = null)
   {
-    session_destroy();
+    if(isset($_SESSION)){
+      session_destroy();
+    }
     if(isset($location) && !empty($location)){
       $this->moveTo($location);
     }
