@@ -87,6 +87,40 @@ class User extends db
   } // End of userlist();
 
 
+  // removeUser() => Boolean
+  //Removes user by given UID or multiple users when it is an array
+  public function removeUser($id = NULL)
+  {
+    if(!isset($id)){
+      $mysqli = $this->connect();
+      $query = "DELETE FROM tbl_users WHERE id = $this->id";
+      $result = $mysqli->query($query);
+      if(!$result){
+        return false;
+      }
+      return true;
+    }
+    if(is_array($id)){
+      // $mysqli = $this->connect();
+      // foreach($id AS $key => $value){
+      //   $removeId = $value;
+      //   $this->removeUser($removeId);
+      // }
+      return false;
+    }else{
+      $mysqli = $this->connect();
+      $id = $mysqli->real_escape_string($id);
+      $query = "DELETE FROM tbl_users WHERE id = $id";
+      $result = $mysqli->query($query);
+      if(!$result){
+        return false;
+      }
+      return true;
+    }
+    return false;
+  } // End of removeUser();
+
+
   // login($username, $password) => boolean
   // on true: given username and password match, sessions will be set
   // on false: given userame and password do not match, or do not exist, sessions won't be set
