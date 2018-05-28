@@ -21,7 +21,7 @@ class User extends db
   public $id        = ""; // UID
   public $username  = ""; // Username of the user (needed for the login)
   public $password  = ""; // Password FROM the user (User given password, not db registered)
-  public $userLevel = ""; // Userlevel of the user (int)
+  public $userlevel = ""; // Userlevel of the user (int)
   private $hash     = ""; // db Registered password (is a salted hash)
   private $salt     = ""; // db stored salt
   private $userData = ""; // userlist() will return this array filled with all users
